@@ -4,7 +4,7 @@
   var EVENTS = {
     wedding: {
       title: "Wedding Ceremony",
-      calendarTitle: "Pradeep and Swarna Wedding",
+      calendarTitle: "Swarna and Pradeep Wedding",
       date: "2026-06-29T12:15:00+05:30",
       duration: 4,
       venue: "BAZAR Auditorium",
@@ -36,11 +36,21 @@
     navigatingAway: false
   };
 
+  function openInvitation() {
+    if (state.envelopeOpened) return;
+
+    state.envelopeOpened = true;
+    envelope.classList.add("opening");
+    envelopeScreen.classList.add("hidden");
+    mainContent.classList.add("visible");
+    soundToggle.classList.add("visible");
+  }
+
+  envelope.addEventListener("click", openInvitation);
+
   function initScratchCard() {
     var wrapper = document.getElementById("scratchWrapper");
     var canvas = document.getElementById("scratchCanvas");
-    var hint = document.getElementById("scratchHint");
-    var shimmer = document.getElementById("scratchShimmer");
 
     if (!wrapper || !canvas) return;
 
@@ -62,7 +72,7 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, logicalW, logicalH);
 
-      // TEXTURE LINES
+      // TEXTURE
       ctx.save();
       ctx.strokeStyle = "rgba(255, 240, 180, 0.1)";
       ctx.lineWidth = 0.8;
@@ -74,36 +84,35 @@
       }
       ctx.restore();
 
-      // LIGHT GLEAM
+      // GLEAM
       var gleam = ctx.createLinearGradient(0, 0, logicalW * 0.7, logicalH * 0.5);
-      gleam.addColorStop(0, "rgba(255, 252, 220, 0.0)");
-      gleam.addColorStop(0.35, "rgba(255, 252, 220, 0.22)");
-      gleam.addColorStop(1, "rgba(255, 252, 220, 0.0)");
+      gleam.addColorStop(0, "rgba(255,252,220,0)");
+      gleam.addColorStop(0.35, "rgba(255,252,220,0.22)");
+      gleam.addColorStop(1, "rgba(255,252,220,0)");
       ctx.fillStyle = gleam;
       ctx.fillRect(0, 0, logicalW, logicalH);
 
       // =========================
-      // 🔥 ENGRAVED TEXT (ADDED)
+      // ENGRAVED TEXT (SAFE ADD)
       // =========================
-
       ctx.save();
 
       ctx.textAlign = "center";
       ctx.globalAlpha = 0.9;
 
-      // Engraved effect: shadow + highlight combo
+      // shadow (engrave depth)
       ctx.shadowColor = "rgba(0,0,0,0.35)";
       ctx.shadowBlur = 2;
       ctx.shadowOffsetY = 1;
 
-      ctx.fillStyle = "#6b1f1f"; // maroon
+      ctx.fillStyle = "#6b1f1f";
       ctx.font = "600 20px Cinzel, serif";
       ctx.fillText("29 June 2026", logicalW / 2, logicalH / 2 - 10);
 
       ctx.font = "500 16px Cinzel, serif";
       ctx.fillText("12:15 PM", logicalW / 2, logicalH / 2 + 20);
 
-      // subtle highlight for engraved feel
+      // highlight (top shine)
       ctx.shadowColor = "rgba(255,255,255,0.25)";
       ctx.shadowBlur = 1;
       ctx.shadowOffsetY = -1;
@@ -126,6 +135,7 @@
 
       canvas.width = logicalW * dpr;
       canvas.height = logicalH * dpr;
+
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
