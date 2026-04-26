@@ -1082,6 +1082,41 @@ button {
   white-space: nowrap;
 }
 
+@media (max-width: 600px) {
+  .blessing-card {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .blessing-left {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .couple-photo img {
+    aspect-ratio: 4 / 3;
+    object-position: top center;
+  }
+
+  .blessing-right {
+    width: 100%;
+  }
+
+  .blessing-right .blessing-title {
+    height: auto;
+    justify-content: center;
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+    padding: 8px 0;
+  }
+
+  .bt-l1,
+  .bt-l2,
+  .bt-l3 {
+    white-space: normal;
+  }
+}
+
 .couple-photo {
   display: block;
   width: 100%;
