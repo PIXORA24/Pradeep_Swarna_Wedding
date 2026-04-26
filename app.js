@@ -485,6 +485,7 @@
 
   envelope.addEventListener("click", openInvitation);
   envelope.addEventListener("keydown", handleEnvelopeKey);
+  envelopeScreen.addEventListener("click", openInvitation);
 
   soundToggle.addEventListener("click", function () {
     state.musicOn = !state.musicOn;
