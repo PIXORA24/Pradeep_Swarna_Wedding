@@ -4,7 +4,7 @@
   var EVENTS = {
     wedding: {
       title: "Wedding Ceremony",
-      calendarTitle: "Swarna and Pradeep Wedding",
+      calendarTitle: "Pradeep and Swarna Wedding",
       date: "2026-06-29T12:15:00+05:30",
       duration: 4,
       venue: "BAZAR Auditorium",
@@ -397,7 +397,7 @@
     return "https://calendar.google.com/calendar/render?action=TEMPLATE"
       + "&text=" + encodeURIComponent(eventData.calendarTitle)
       + "&dates=" + formatUtcDate(start) + "/" + formatUtcDate(end)
-      + "&details=" + encodeURIComponent(eventData.title + " at " + eventData.venue)
+      + "&details=" + encodeURIComponent("You're invited to the wedding of Pradeep & Swarna!\n\n📅 29th June 2026\n🕐 12:15 PM\n📍 BAZAR Auditorium, Kandur Panemangalore\n\nWe look forward to celebrating this special day with you.")
       + "&location=" + encodeURIComponent(location);
   }
 
@@ -609,6 +609,26 @@
       gleam.addColorStop(1, "rgba(255, 252, 220, 0.0)");
       ctx.fillStyle = gleam;
       ctx.fillRect(0, 0, logicalW, logicalH);
+
+      // Engraved "WEDDING DATE & TIME" label baked into the foil
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      var engraveFontSize = Math.max(10, Math.min(14, logicalW / 22));
+      ctx.font = "600 " + engraveFontSize + "px 'Cinzel', serif";
+      if ("letterSpacing" in ctx) { ctx.letterSpacing = "3px"; }
+      var cx = logicalW / 2;
+      var cy = logicalH / 2;
+      // Inset shadow (down-right)
+      ctx.fillStyle = "rgba(0, 0, 0, 0.30)";
+      ctx.fillText("WEDDING DATE & TIME", cx + 1, cy + 1);
+      // Raised highlight (up-left)
+      ctx.fillStyle = "rgba(255, 215, 140, 0.22)";
+      ctx.fillText("WEDDING DATE & TIME", cx - 0.5, cy - 0.5);
+      // Main engraved text (deep maroon)
+      ctx.fillStyle = "rgba(88, 18, 18, 0.68)";
+      ctx.fillText("WEDDING DATE & TIME", cx, cy);
+      ctx.restore();
     }
 
     function initCanvas() {
