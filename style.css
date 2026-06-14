@@ -1136,6 +1136,299 @@ button {
     0 0 0 1px rgba(184, 137, 61, 0.12);
 }
 
+/* ============================================================
+   Our Journey — film section
+   ============================================================ */
+.story-section {
+  position: relative;
+  padding: clamp(64px, 9vw, 110px) 20px clamp(40px, 6vw, 72px);
+  background: linear-gradient(180deg, #fffaf5 0%, #fffaf5 100%);
+}
+
+.story-shell {
+  width: min(100%, 720px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story-title {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+  line-height: 1.2;
+  max-width: 18ch;
+  margin-inline: auto;
+  color: var(--rose-deep);
+  text-wrap: balance;
+}
+
+.story-copy {
+  max-width: 34ch;
+  margin: 16px auto 0;
+  font-size: clamp(1.04rem, 2.3vw, 1.2rem);
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--ink-soft);
+  text-wrap: balance;
+}
+
+.story-video {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  margin: clamp(28px, 4.4vw, 44px) auto 0;
+  padding: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  background: #000;
+  border: 1px solid rgba(200, 154, 86, 0.32);
+  box-shadow: var(--shadow);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.story-video__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.story-video__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(40, 12, 16, 0.05) 0%, rgba(40, 12, 16, 0.12) 52%, rgba(40, 12, 16, 0.46) 100%);
+}
+
+.story-video__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: rgba(255, 250, 244, 0.94);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
+  color: var(--rose-deep);
+  transition: transform 0.32s var(--ease), background 0.32s ease;
+}
+
+.story-video__play svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+  margin-left: 3px;
+}
+
+.story-video__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 250, 244, 0.7);
+  animation: storyPlayPulse 2.4s ease-out infinite;
+}
+
+.story-video__label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 240, 0.95);
+}
+
+@media (hover: hover) {
+  .story-video:hover .story-video__poster {
+    transform: scale(1.045);
+  }
+
+  .story-video:hover .story-video__play {
+    transform: translate(-50%, -50%) scale(1.08);
+    background: #fff;
+  }
+}
+
+.story-video:active .story-video__play {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+/* ============================================================
+   Video modal (lightbox + rotate-to-fill)
+   ============================================================ */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 6, 9, 0.88);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.video-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.video-modal__backdrop {
+  position: absolute;
+  inset: 0;
+}
+
+.video-modal__stage {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 880px);
+}
+
+.video-modal__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.video-modal__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-modal__btn {
+  position: fixed;
+  z-index: 1210;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 250, 244, 0.92);
+  color: var(--rose-deep);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.25s var(--ease), background 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-modal__btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.video-modal__close {
+  top: 16px;
+  right: 16px;
+}
+
+.video-modal__rotate {
+  top: 16px;
+  left: 16px;
+}
+
+.video-modal__rotate .icon-shrink {
+  display: none;
+}
+
+@media (hover: hover) {
+  .video-modal__btn:hover {
+    transform: scale(1.08);
+    background: #fff;
+  }
+}
+
+.video-modal__btn:active {
+  transform: scale(0.94);
+}
+
+/* Maximized / rotated state — fills a portrait screen as landscape */
+.video-modal.is-rotated {
+  padding: 0;
+}
+
+.video-modal.is-rotated .video-modal__stage {
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.video-modal.is-rotated .video-modal__frame {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.video-modal.is-rotated .video-modal__video {
+  flex: none;
+  width: 100vh;
+  height: 100vw;
+  width: 100dvh;
+  height: 100dvw;
+  max-width: none;
+  max-height: none;
+  transform: rotate(90deg);
+}
+
+.video-modal.is-rotated .video-modal__rotate .icon-expand {
+  display: none;
+}
+
+.video-modal.is-rotated .video-modal__rotate .icon-shrink {
+  display: block;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@keyframes storyPlayPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
 .studio-footer {
   padding-top: 34px;
   text-align: center;

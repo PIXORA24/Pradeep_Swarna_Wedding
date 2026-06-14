@@ -24,6 +24,7 @@
   var mainContent = document.getElementById("mainContent");
   var weddingSection = document.getElementById("weddingSection");
   var weddingVideo = document.getElementById("weddingVideo");
+  var storyVideo = document.getElementById("storyVideo");
   var backgroundMusic = document.getElementById("bgMusic");
   var soundToggle = document.getElementById("soundToggle");
   var soundToggleLabel = soundToggle.querySelector(".sound-btn__label");
@@ -515,6 +516,7 @@
         saveReturnState(true);
       }
       pauseMedia(weddingVideo);
+      pauseMedia(storyVideo);
       pauseMedia(backgroundMusic);
       return;
     }
@@ -877,11 +879,104 @@
     });
   }
 
+  function initVideoModal() {
+    var trigger = document.getElementById("storyVideoTrigger");
+    var modal = document.getElementById("videoModal");
+    var rotateBtn = document.getElementById("videoModalRotate");
+
+    if (!trigger || !modal || !storyVideo) {
+      return;
+    }
+
+    var isOpen = false;
+
+    function openModal() {
+      if (isOpen) {
+        return;
+      }
+
+      isOpen = true;
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+
+      // Hand audio over to the film: pause the looping hero clip and music.
+      pauseMedia(weddingVideo);
+      pauseMedia(backgroundMusic);
+
+      storyVideo.muted = false;
+      storyVideo.currentTime = 0;
+      playMedia(storyVideo).catch(function () {});
+
+      trackEvent("story_video_open", {
+        source: "story_section"
+      });
+    }
+
+    function closeModal() {
+      if (!isOpen) {
+        return;
+      }
+
+      isOpen = false;
+      modal.classList.remove("is-open");
+      modal.classList.remove("is-rotated");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+
+      pauseMedia(storyVideo);
+
+      if (rotateBtn) {
+        rotateBtn.setAttribute("aria-label", "Maximize video");
+      }
+
+      // Resume background music / hero video per the current state.
+      syncMedia();
+    }
+
+    function toggleRotate() {
+      var rotated = modal.classList.toggle("is-rotated");
+
+      if (rotateBtn) {
+        rotateBtn.setAttribute("aria-label", rotated ? "Exit full screen" : "Maximize video");
+      }
+
+      trackEvent("story_video_maximize", {
+        state: rotated ? "on" : "off"
+      });
+    }
+
+    trigger.addEventListener("click", openModal);
+
+    if (rotateBtn) {
+      rotateBtn.addEventListener("click", toggleRotate);
+    }
+
+    modal.querySelectorAll("[data-close]").forEach(function (element) {
+      element.addEventListener("click", closeModal);
+    });
+
+    storyVideo.addEventListener("ended", function () {
+      modal.classList.remove("is-rotated");
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (!isOpen) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    });
+  }
+
   bindActionButtons();
   bindRevealObserver();
   bindHeroObserver();
   initScratchCard();
   initRsvpDropdown();
+  initVideoModal();
   updateHeroInViewState();
   hideScrollHint();
   setSoundButton();
