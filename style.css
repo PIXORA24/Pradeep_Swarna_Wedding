@@ -575,6 +575,7 @@ button {
 .details-section {
   background:
     linear-gradient(180deg, #fbf1e7 0%, #fffaf5 100%);
+  padding-bottom: clamp(30px, 5vw, 52px);
 }
 
 .details-shell {
@@ -1141,7 +1142,7 @@ button {
    ============================================================ */
 .story-section {
   position: relative;
-  padding: clamp(64px, 9vw, 110px) 20px clamp(40px, 6vw, 72px);
+  padding: clamp(24px, 5vw, 44px) 20px clamp(30px, 5vw, 52px);
   background: linear-gradient(180deg, #fffaf5 0%, #fffaf5 100%);
 }
 
@@ -1165,7 +1166,7 @@ button {
 
 .story-copy {
   max-width: 34ch;
-  margin: 16px auto 0;
+  margin: clamp(16px, 3vw, 24px) auto 0;
   font-size: clamp(1.04rem, 2.3vw, 1.2rem);
   line-height: 1.55;
   font-style: italic;
@@ -1178,7 +1179,7 @@ button {
   display: block;
   width: 100%;
   max-width: 540px;
-  margin: clamp(28px, 4.4vw, 44px) auto 0;
+  margin: clamp(22px, 4vw, 34px) auto 0;
   padding: 0;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-md);
