@@ -982,37 +982,47 @@ button {
 }
 
 .closing-section {
-  padding-top: 0;
+  padding-top: clamp(34px, 6vw, 60px);
   background: linear-gradient(180deg, #fffaf5 0%, #f3ddd1 100%);
 }
 
-.blessing-card {
-  width: min(100%, 760px);
-  margin: 0 auto;
-  padding: 0;
-  display: flex;
-  align-items: stretch;
-  gap: 10px;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
+/* Thank-you note as the section headline */
 .blessing-title {
-  margin-top: 14px;
-  font-size: clamp(1.8rem, 3.8vw, 2.8rem);
-  line-height: 1.16;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(6px, 1.6vw, 12px);
+  max-width: 18ch;
+  margin: 0 auto;
+  text-align: center;
+  font-size: clamp(1.9rem, 6.4vw, 3rem);
+  line-height: 1.12;
+  color: var(--rose-deep);
 }
 
-.blessing-copy {
-  margin-top: 18px;
+.bt-l1 {
+  font-size: 1.05em;
+}
+
+.bt-l2 {
+  font-size: 0.4em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
   color: var(--ink-soft);
 }
 
-.blessing-left {
-  flex: 0 0 42%;
-  max-width: 42%;
-  padding: clamp(14px, 2vw, 22px);
+.bt-l3 {
+  font-size: 0.95em;
+}
+
+/* Couple photo card below the headline */
+.blessing-card {
+  width: min(100%, 420px);
+  margin: clamp(26px, 4.6vw, 40px) auto 0;
+  padding: clamp(14px, 2.4vw, 22px);
+  display: block;
+  text-align: center;
   background: rgba(255, 250, 244, 0.92);
   border: 1px solid rgba(148, 73, 82, 0.14);
   border-radius: var(--radius-lg);
@@ -1021,101 +1031,24 @@ button {
 
 .blessing-kicker {
   display: block;
+  margin: 14px 0 0;
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);
   line-height: 1.5;
-  margin: 8px 0 0 0;
-  padding: 0;
   text-align: center;
 }
 
-.blessing-left .blessing-copy {
+.blessing-card .blessing-copy {
   display: block;
-  font-size: 1rem;
-  color: var(--ink-soft);
-  margin: 6px 0 0 0;
-  padding: 0;
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--rose-deep);
   text-align: center;
-}
-
-.blessing-right {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: stretch;
-  padding: clamp(14px, 2vw, 22px);
-  background: rgba(255, 250, 244, 0.92);
-  border: 1px solid rgba(148, 73, 82, 0.14);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-}
-
-.blessing-right .blessing-title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: clamp(6px, 1.2vw, 14px);
-  width: 100%;
-  height: 100%;
-  font-size: clamp(1.2rem, 4.5vw, 3.5rem);
-  text-align: center;
-  line-height: 1.1;
-  margin: 0;
-}
-
-.bt-l1 {
-  font-size: 1.1em;
-  white-space: nowrap;
-}
-
-.bt-l2 {
-  font-size: 0.5em;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-}
-
-.bt-l3 {
-  font-size: 0.9em;
-  white-space: nowrap;
-}
-
-@media (max-width: 600px) {
-  .blessing-card {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .blessing-left {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .couple-photo img {
-    aspect-ratio: 4 / 3;
-    object-position: top center;
-  }
-
-  .blessing-right {
-    width: 100%;
-  }
-
-  .blessing-right .blessing-title {
-    height: auto;
-    justify-content: center;
-    font-size: clamp(1.6rem, 7vw, 2.4rem);
-    padding: 8px 0;
-  }
-
-  .bt-l1,
-  .bt-l2,
-  .bt-l3 {
-    white-space: normal;
-  }
 }
 
 .couple-photo {
